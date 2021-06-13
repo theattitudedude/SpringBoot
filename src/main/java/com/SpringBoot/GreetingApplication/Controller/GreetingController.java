@@ -1,27 +1,28 @@
 package com.SpringBoot.GreetingApplication.Controller;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.SpringBoot.GreetingApplication.Pojo.Greeting;
 
 @RestController
 @RequestMapping("/greeting")
 public class GreetingController {
 	
-	@Value("${greeting-name: Mirage}")
-	private String nameString;
+	private final Greeting greeting;
 	
-	@Value("${greeting-coffee: ${greeting-name} is drinking coffee}")
-	private String coffee;
+	public GreetingController(Greeting greeting) {
+		this.greeting = greeting;
+	}
 	
 	@GetMapping
 	String getGreeting() {
-		return nameString;
+		return greeting.getName();
 	}
 	
 	@GetMapping("/coffee")
 	String getNameAndCoffee() {
-		return coffee;
+		return greeting.getCoffee();
 	}
 }
